@@ -1,0 +1,38 @@
+DESCRIPTION:
+flow game solver by Harrison D. Miller
+
+COMPILING:
+You can use the included script to build the program or or directly use the following command:
+g++ -o flow Creature.cpp Population.cpp Point.cpp AdjMatrix.cpp Dijkstra.cpp Pair.cpp Fitness.cpp Checker.cpp ResolveOverlap.cpp Solver.cpp flow.cpp -pthread -std=c++11
+c++11 and pthread library are required to build. (both should be available through build-essential package on Ubuntu).
+
+RUNNING:
+./flow < testcase.txt
+
+if you wish to see genetic algorithm debug information
+or partial solutions for cases deemed unsolvable add the -d flag
+./flow -d < testcase.txt
+
+
+OVERVIEW OF THE CODE:
+I used a genetic algorithm (GA) to change weights in an adjacency matrix
+that was then fed into dijkstra's algorithm to connect nodes. I then
+wrote some logic to attempt to reconnect missing nodes and resolve
+overlaps.
+
+PITFALLS:
+Because of the time constraint of the program I use a relatively small population
+and number of generations for the GA. This causes it to often fall into a local minima
+where it can no longer make new connections. This is especially the case in larger grids
+and in grids where it is able to make all the connections but has a lot of space to fill.
+
+IMPROVEMENTS:
+Given enough time I would have added a space filling specific mutation for the
+GA that only mutated connections to tiles nearby unfilled spaces.
+
+I would have also liked to ditch my overlap resolving code, however I think 
+it was a necessary evil in order to get the solver to work in many cases
+under time constraints.
+
+Plenty of optimizations could have been made in how I handled threading so that
+I could more easily have a larger population size and number of generations.
